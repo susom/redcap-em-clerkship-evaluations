@@ -1,49 +1,75 @@
 {
-	"name": "ClassNameHere",
-
-	"namespace": "Stanford\\ClassNameHere",
-
-	"description": "A template for a REDCap External Module",
-
-	"documentation": "README.md",
-
-	"authors": [
-		{
-			"name": "Andrew Martin",
-			"email": "andy123@stanford.edu",
-			"institution": "Stanford University"
-		}
-	],
-
-	"permissions": [
-		"redcap_module_system_enable",
-		"redcap_module_project_enable",
-		"redcap_module_save_configuration"
-	],
-	
-	"enable-every-page-hooks-on-system-pages": false,	
-
-	"links": {
-		"project": [
-
-		],
-		"control-center": [
-
-		]
-	},
+    "name": "ClerkshipEvaluations",
+    "namespace": "Stanford\\ClerkshipEvaluations",
+    "description": "EM that will allow students to evaluate preceptors and vise vera",
+    "documentation": "README.md",
+    "authors": [
+        {
+            "name": "Andrew Martin",
+            "email": "andy123@stanford.edu",
+            "institution": "Stanford University"
+        },
+        {
+            "name": "Ihab Zeedia",
+            "email": "ihabz@stanford.edu",
+            "institution": "Stanford University"
+        }
+    ],
+    "permissions": [
+        "redcap_every_page_before_render",
+        "redcap_save_record",
+        "redcap_survey_complete"
+    ],
+    "enable-every-page-hooks-on-system-pages": false,
+    "links": {
+        "project": [
+        ],
+        "control-center": [
+        ]
+    },
 
 	"no-auth-pages": [
 
 	],
 
 	"project-settings": [
-		{
-			"key": "enable-project-debug-logging",
-			"name": "<b>Enable Debug Logging</b><br><i>(optional)</i> Requires installation and configuration of emLogger",
-			"required": false,
-			"type": "checkbox"
-		}
-	],
+        {
+            "key": "header_text",
+            "name": "Please add Student Header text",
+            "required": true,
+            "type": "textarea"
+        },
+        {
+            "key": "preceptors",
+            "name": "Select Preceptors Event",
+            "required": true,
+            "type": "event-list"
+        },
+        {
+            "key": "rotations",
+            "name": "Select Rotations Event",
+            "required": true,
+            "type": "event-list"
+        },
+        {
+            "key": "students",
+            "name": "Select Students Event",
+            "required": true,
+            "type": "event-list"
+        },
+        {
+            "key": "preceptor-student-reviews",
+            "name": "Select Preceptors Students Reviews Event",
+            "required": true,
+            "type": "event-list"
+        },
+        {
+            "key": "enable-project-debug-logging",
+            "name": "<b>Enable Debug Logging</b><br><i>(optional)</i> Requires installation and configuration of emLogger",
+            "required": false,
+            "type": "checkbox"
+        }
+    ],
 
 
 	"system-settings": [
