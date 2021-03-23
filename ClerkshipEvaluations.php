@@ -88,23 +88,6 @@ class ClerkshipEvaluations extends \ExternalModules\AbstractExternalModule
         return $this->getUrl('view/' . $instrument . '.php', true, true) . '&hash=' . $hash;
     }
 
-    public function redcap_module_system_enable($version)
-    {
-
-    }
-
-
-    public function redcap_module_project_enable($version, $project_id)
-    {
-
-    }
-
-
-    public function redcap_module_save_configuration($project_id)
-    {
-
-    }
-
     /**
      * @return Student
      */
