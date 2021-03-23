@@ -30,6 +30,18 @@ class PreceptorStudentReviews
         return REDCap::getData($params);
     }
 
+    public function getPreceptorReviews($preceptorId)
+    {
+        $filter = "[preceptor_id] = '" . $preceptorId . "'";
+
+        $params = array(
+            'return_format' => 'array',
+            'filterLogic' => $filter,
+            'events' => $this->getEventId(),
+        );
+        return REDCap::getData($params);
+    }
+
     /**
      * @return int
      */

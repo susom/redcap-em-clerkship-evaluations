@@ -74,8 +74,9 @@ class Preceptor
      */
     public function setRecord($identifier, $field = 'hash'): void
     {
-        $this->record = $this->getStudentViaHash($identifier, $field,
+        $temp = $this->getStudentViaHash($identifier, $field,
             array());;
+        $this->record = array_pop($temp);
     }
 
     /**

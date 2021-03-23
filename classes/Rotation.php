@@ -45,6 +45,17 @@ class Rotation
         return REDCap::getData($params);
     }
 
+    public static function getRotation($rotationId, $eventId)
+    {
+        $params = array(
+            'return_format' => 'array',
+            'records' => [$rotationId],
+            'events' => $eventId,
+        );
+        $record = REDCap::getData($params);
+        return $record[$rotationId];
+    }
+
     /**
      * @return int
      */

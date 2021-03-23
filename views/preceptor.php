@@ -6,12 +6,13 @@ namespace Stanford\LectureEvaluation;
 
 use \REDCap;
 use Stanford\ClerkshipEvaluations\Rotation;
+use Stanford\ClerkshipEvaluations\Student;
 
 ?>
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Lectures Evaluation list</title>
+    <title>Preceptors - Clerkship Evaluations</title>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,21 +49,28 @@ use Stanford\ClerkshipEvaluations\Rotation;
             <th>ID</th>
             <th>Location</th>
             <th>Month</th>
-            <th>Actions</th>
+            <th>Student</th>
+            <th>Pre-Rotation Review</th>
+            <th>Post-Rotation Review</th>
             </thead>
             <tbody>
             <?php
-            $rotations = $module->getPreceptor()->getRotations($module->getRotation()->getEventId());
             $months = $module->getProject()->metadata['month']["element_enum"];
-            foreach ($rotations as $rotation) {
-                ?>
-                <tr>
-                    <td><?php echo $rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()] ?></td>
-                    <td><?php echo $rotation[$module->getRotation()->getEventId()]['location'] ?></td>
-                    <td><?php echo Rotation::getMonthValue($months, $rotation[$module->getRotation()->getEventId()]['month']) ?></td>
-                    <td></td>
-                </tr>
-                <?php
+            $reviews = $module->getPreceptorStudentReview()->getPreceptorReviews($module->getPreceptor()->getRecord()[$module->getPreceptor()->getEventId()][REDCap::getRecordIdField()]);
+            if ($reviews) {
+                foreach ($reviews as $id => $review) {
+                    $rotation = Rotation::getRotation($review[$module->getPreceptorStudentReview()->getEventId()]['rotation_id'], $module->getRotation()->getEventId())
+                    ?>
+                    <tr>
+                        <td><?php echo $rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()] ?></td>
+                        <td><?php echo $rotation[$module->getRotation()->getEventId()]['location'] ?></td>
+                        <td><?php echo Rotation::getMonthValue($months, $rotation[$module->getRotation()->getEventId()]['month']) ?></td>
+                        <td><?php echo Student::getStudentName($module->getStudent()->getEventId(), $rotation[$module->getRotation()->getEventId()]['student_id']) ?></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <?php
+                }
             }
             ?>
             </tbody>

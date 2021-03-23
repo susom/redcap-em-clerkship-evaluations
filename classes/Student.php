@@ -53,6 +53,17 @@ class Student
         $this->setRecordId($temp[$this->getEventId()][REDCap::getRecordIdField()]);
     }
 
+    public static function getStudentName($eventId, $studentId)
+    {
+        $params = array(
+            'return_format' => 'array',
+            'records' => [$studentId],
+            'events' => $eventId,
+        );
+        $data = REDCap::getData($params);
+        return $data[$studentId][$eventId]['first_name'] . ' ' . $data[$studentId][$eventId]['last_name'];
+    }
+
     /**
      * @return int
      */

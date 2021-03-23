@@ -45,7 +45,15 @@ class ClerkshipEvaluations extends \ExternalModules\AbstractExternalModule
             $this->setPreceptorStudentReview(new PreceptorStudentReviews($this->getProjectSetting("preceptor-student-reviews")));
 
             if (isset($_GET['hash'])) {
-                $this->getStudent()->setRecord(filter_var($_GET['hash'], FILTER_SANITIZE_STRING));
+                if (!isset($_GET['page'])) {
+                    throw new \Exception("page is missing");
+                }
+                if (strpos($_GET['page'], 'student') !== false) {
+                    $this->getStudent()->setRecord(filter_var($_GET['hash'], FILTER_SANITIZE_STRING));
+                }
+                if (strpos($_GET['page'], 'preceptor') !== false) {
+                    $this->getPreceptor()->setRecord(filter_var($_GET['hash'], FILTER_SANITIZE_STRING), 'preceptor_hash');
+                }
             }
         } catch (\Exception $e) {
             echo $e->getMessage();

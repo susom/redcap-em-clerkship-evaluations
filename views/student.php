@@ -68,7 +68,7 @@ use Stanford\ClerkshipEvaluations\Rotation;
                             <td><?php echo $rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()] ?></td>
                             <td><?php echo $rotation[$module->getRotation()->getEventId()]['location'] ?></td>
                             <td><?php echo Rotation::getMonthValue($months, $rotation[$module->getRotation()->getEventId()]['month']) ?></td>
-                            <td><?php echo Preceptor::getPreceptorName($module->getPreceptor()->getEventId(), $review[$module->getPreceptorStudentReview()->getEventId()]['psr_preceptor_id']) ?></td>
+                            <td><?php echo Preceptor::getPreceptorName($module->getPreceptor()->getEventId(), $review[$module->getPreceptorStudentReview()->getEventId()]['preceptor_id']) ?></td>
                             <td><?php echo !$review[$module->getPreceptorStudentReview()->getEventId()]['student_evaluation_complete'] ? '<a href="' . $url . '" target="_blank">Evaluate</a>' : 'Evaluation Completed' ?></td>
                         </tr>
                         <?php
