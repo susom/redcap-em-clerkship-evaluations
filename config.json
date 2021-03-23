@@ -27,12 +27,11 @@
         "control-center": [
         ]
     },
-
-	"no-auth-pages": [
-
-	],
-
-	"project-settings": [
+    "no-auth-pages": [
+        "views/student",
+        "views/preceptor"
+    ],
+    "project-settings": [
         {
             "key": "header_text",
             "name": "Please add Student Header text",

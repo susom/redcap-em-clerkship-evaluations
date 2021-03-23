@@ -9,6 +9,7 @@ use REDCap;
  * @package Stanford\ClerkshipEvaluations
  * @property int $eventId
  * @property array $record
+ * @property array $rotations
  */
 class Student
 {
@@ -17,6 +18,8 @@ class Student
     private $eventId;
 
     private $record;
+
+    private $rotations;
 
     public function __construct($eventId)
     {
@@ -41,7 +44,7 @@ class Student
     public function setRecord($identifier, $field = 'hash')
     {
         $this->record = $this->getStudentViaHash($identifier, $field,
-            array());;
+            array());
     }
 
     /**
@@ -114,4 +117,26 @@ class Student
         }
         return false;
     }
+
+    /**
+     * @return array
+     */
+    public function getRotations($rotationsEventId): array
+    {
+        if ($this->rotations) {
+            return $this->rotations;
+        } else {
+            $this->setRotations(Rotation::getRotationsRecords($this->getRecord()[$this->getEventId()][\REDCap::getRecordIdField()], $rotationsEventId, 'student'));
+        }
+        return $this->rotations;
+    }
+
+    /**
+     * @param array $rotations
+     */
+    public function setRotations(array $rotations): void
+    {
+        $this->rotations = $rotations;
+    }
+
 }

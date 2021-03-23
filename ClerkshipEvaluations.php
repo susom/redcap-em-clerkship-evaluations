@@ -15,7 +15,7 @@ use REDCap;
  * @property \Stanford\ClerkshipEvaluations\Preceptor $preceptor
  * @property \Stanford\ClerkshipEvaluations\Rotation $rotation
  * @property \Stanford\ClerkshipEvaluations\PreceptorStudentReviews $preceptorStudentReview
- *
+ * @property \Project $project
  */
 class ClerkshipEvaluations extends \ExternalModules\AbstractExternalModule
 {
@@ -30,12 +30,15 @@ class ClerkshipEvaluations extends \ExternalModules\AbstractExternalModule
 
     private $preceptorStudentReview;
 
+    private $project;
 
     public function __construct()
     {
         parent::__construct();
 
         try {
+            global $Proj;
+            $this->setProject($Proj);
             $this->setStudent(new Student($this->getProjectSetting("students")));
             $this->setPreceptor(new Preceptor($this->getProjectSetting("preceptors")));
             $this->setRotation(new Rotation($this->getProjectSetting("rotations")));
@@ -85,7 +88,7 @@ class ClerkshipEvaluations extends \ExternalModules\AbstractExternalModule
 
     private function generateURL($hash, $instrument)
     {
-        return $this->getUrl('view/' . $instrument . '.php', true, true) . '&hash=' . $hash;
+        return $this->getUrl('views/' . $instrument . '.php', true, true) . '&hash=' . $hash;
     }
 
     /**
@@ -151,5 +154,22 @@ class ClerkshipEvaluations extends \ExternalModules\AbstractExternalModule
     {
         $this->preceptorStudentReview = $preceptorStudentReview;
     }
+
+    /**
+     * @return \Project
+     */
+    public function getProject(): \Project
+    {
+        return $this->project;
+    }
+
+    /**
+     * @param \Project $project
+     */
+    public function setProject(\Project $project): void
+    {
+        $this->project = $project;
+    }
+
 
 }

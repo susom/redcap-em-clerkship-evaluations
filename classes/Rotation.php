@@ -4,6 +4,12 @@
 namespace Stanford\ClerkshipEvaluations;
 
 use REDCap;
+
+/**
+ * Class Rotation
+ * @package Stanford\ClerkshipEvaluations
+ * @property int $eventId
+ */
 class Rotation
 {
     private $eventId;
@@ -15,6 +21,28 @@ class Rotation
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
+    }
+
+    public static function getMonthValue($list, $index)
+    {
+        $months = parseEnum($list);
+        return $months[$index];
+    }
+
+    public static function getRotationsRecords($recordId, $eventId, $type)
+    {
+        if ($type == 'students') {
+            $filter = "[student_id] = '" . $recordId . "'";
+
+        } elseif ($type == 'preceptor') {
+            $filter = "[preceptor] = '" . $recordId . "'";
+        }
+        $params = array(
+            'return_format' => 'array',
+            'filterLogic' => $filter,
+            'events' => $eventId,
+        );
+        return REDCap::getData($params);
     }
 
     /**

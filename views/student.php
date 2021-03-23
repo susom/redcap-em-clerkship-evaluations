@@ -5,6 +5,7 @@ namespace Stanford\LectureEvaluation;
 /** @var \Stanford\ClerkshipEvaluations\ClerkshipEvaluations $module */
 
 use \REDCap;
+use Stanford\ClerkshipEvaluations\Rotation;
 
 ?>
 <!doctype html>
@@ -44,15 +45,26 @@ use \REDCap;
     <div class="row p-1">
         <table id="student-table" class="display table table-striped table-bordered">
             <thead>
-            <th>Course</th>
-            <th>Topic</th>
-            <th>Date</th>
-            <th>Instructor</th>
-            <th>notes</th>
-            <th>Evaluate</th>
+            <th>ID</th>
+            <th>Location</th>
+            <th>Month</th>
+            <th>Actions</th>
             </thead>
             <tbody>
-
+            <?php
+            $rotations = $module->getStudent()->getRotations($module->getRotation()->getEventId());
+            $months = $module->getProject()->metadata['month']["element_enum"];
+            foreach ($rotations as $rotation) {
+                ?>
+                <tr>
+                    <td><?php echo $rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()] ?></td>
+                    <td><?php echo $rotation[$module->getRotation()->getEventId()]['location'] ?></td>
+                    <td><?php echo Rotation::getMonthValue($months, $rotation[$module->getRotation()->getEventId()]['month']) ?></td>
+                    <td></td>
+                </tr>
+                <?php
+            }
+            ?>
             </tbody>
         </table>
     </div>

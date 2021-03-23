@@ -10,12 +10,15 @@ use REDCap;
  * @package Stanford\ClerkshipEvaluations
  * @property int $eventId
  * @property array $record
+ * @property array $rotations
  */
 class Preceptor
 {
     private $eventId;
 
     private $record;
+
+    private $rotations;
 
     public function __construct($eventId)
     {
@@ -24,6 +27,27 @@ class Preceptor
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getRotations($rotationsEventId): array
+    {
+        if ($this->rotations) {
+            return $this->rotations;
+        } else {
+            $this->setRotations(Rotation::getRotationsRecords($this->getRecord()[$this->getEventId()][\REDCap::getRecordIdField()], $rotationsEventId, 'preceptor'));
+        }
+        return $this->rotations;
+    }
+
+    /**
+     * @param array $rotations
+     */
+    public function setRotations(array $rotations): void
+    {
+        $this->rotations = $rotations;
     }
 
     /**
@@ -97,4 +121,6 @@ class Preceptor
         }
         return false;
     }
+
+
 }
