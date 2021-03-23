@@ -43,6 +43,10 @@ class ClerkshipEvaluations extends \ExternalModules\AbstractExternalModule
             $this->setPreceptor(new Preceptor($this->getProjectSetting("preceptors")));
             $this->setRotation(new Rotation($this->getProjectSetting("rotations")));
             $this->setPreceptorStudentReview(new PreceptorStudentReviews($this->getProjectSetting("preceptor-student-reviews")));
+
+            if (isset($_GET['hash'])) {
+                $this->getStudent()->setRecord(filter_var($_GET['hash'], FILTER_SANITIZE_STRING));
+            }
         } catch (\Exception $e) {
             echo $e->getMessage();
         }

@@ -8,6 +8,7 @@ use REDCap;
  * Class Student
  * @package Stanford\ClerkshipEvaluations
  * @property int $eventId
+ * @property int $recordId
  * @property array $record
  * @property array $rotations
  */
@@ -20,6 +21,8 @@ class Student
     private $record;
 
     private $rotations;
+
+    private $recordId;
 
     public function __construct($eventId)
     {
@@ -45,6 +48,9 @@ class Student
     {
         $this->record = $this->getStudentViaHash($identifier, $field,
             array());
+
+        $temp = array_pop($this->record);
+        $this->setRecordId($temp[$this->getEventId()][REDCap::getRecordIdField()]);
     }
 
     /**
@@ -61,6 +67,22 @@ class Student
     public function setEventId($event)
     {
         $this->eventId = $event;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRecordId(): int
+    {
+        return $this->recordId;
+    }
+
+    /**
+     * @param int $recordId
+     */
+    public function setRecordId(int $recordId): void
+    {
+        $this->recordId = $recordId;
     }
 
 

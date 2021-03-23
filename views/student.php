@@ -5,13 +5,14 @@ namespace Stanford\LectureEvaluation;
 /** @var \Stanford\ClerkshipEvaluations\ClerkshipEvaluations $module */
 
 use \REDCap;
+use Stanford\ClerkshipEvaluations\Preceptor;
 use Stanford\ClerkshipEvaluations\Rotation;
 
 ?>
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Lectures Evaluation list</title>
+    <title>Student - Clerkship Evaluations</title>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,21 +49,31 @@ use Stanford\ClerkshipEvaluations\Rotation;
             <th>ID</th>
             <th>Location</th>
             <th>Month</th>
-            <th>Actions</th>
+            <th>Preceptor</th>
+            <th>Evaluate</th>
             </thead>
             <tbody>
             <?php
             $rotations = $module->getStudent()->getRotations($module->getRotation()->getEventId());
             $months = $module->getProject()->metadata['month']["element_enum"];
             foreach ($rotations as $rotation) {
-                ?>
-                <tr>
-                    <td><?php echo $rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()] ?></td>
-                    <td><?php echo $rotation[$module->getRotation()->getEventId()]['location'] ?></td>
-                    <td><?php echo Rotation::getMonthValue($months, $rotation[$module->getRotation()->getEventId()]['month']) ?></td>
-                    <td></td>
-                </tr>
-                <?php
+                $reviews = $module->getPreceptorStudentReview()->getRotationReviews($rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()]);
+                if ($reviews) {
+                    foreach ($reviews as $review) {
+                        if (!$review[$module->getPreceptorStudentReview()->getEventId()]['student_evaluation_complete']) {
+                            $url = REDCap::getSurveyLink($review[$module->getPreceptorStudentReview()->getEventId()][REDCap::getRecordIdField()], 'student_evaluation', $module->getPreceptorStudentReview()->getEventId());
+                        }
+                        ?>
+                        <tr>
+                            <td><?php echo $rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()] ?></td>
+                            <td><?php echo $rotation[$module->getRotation()->getEventId()]['location'] ?></td>
+                            <td><?php echo Rotation::getMonthValue($months, $rotation[$module->getRotation()->getEventId()]['month']) ?></td>
+                            <td><?php echo Preceptor::getPreceptorName($module->getPreceptor()->getEventId(), $review[$module->getPreceptorStudentReview()->getEventId()]['psr_preceptor_id']) ?></td>
+                            <td><?php echo !$review[$module->getPreceptorStudentReview()->getEventId()]['student_evaluation_complete'] ? '<a href="' . $url . '" target="_blank">Evaluate</a>' : 'Evaluation Completed' ?></td>
+                        </tr>
+                        <?php
+                    }
+                }
             }
             ?>
             </tbody>

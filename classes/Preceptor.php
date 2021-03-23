@@ -29,6 +29,17 @@ class Preceptor
         }
     }
 
+    public static function getPreceptorName($eventId, $preceptorId)
+    {
+        $params = array(
+            'return_format' => 'array',
+            'records' => [$preceptorId],
+            'events' => $eventId,
+        );
+        $data = REDCap::getData($params);
+        return $data[$preceptorId][$eventId]['preceptor_first_name'] . ' ' . $data[$preceptorId][$eventId]['preceptor_last_name'];
+    }
+
     /**
      * @return array
      */

@@ -17,6 +17,19 @@ class PreceptorStudentReviews
         }
     }
 
+
+    public function getRotationReviews($rotationId)
+    {
+        $filter = "[rotation_id] = '" . $rotationId . "'";
+
+        $params = array(
+            'return_format' => 'array',
+            'filterLogic' => $filter,
+            'events' => $this->getEventId(),
+        );
+        return REDCap::getData($params);
+    }
+
     /**
      * @return int
      */
