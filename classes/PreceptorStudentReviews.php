@@ -2,7 +2,7 @@
 
 
 namespace Stanford\ClerkshipEvaluations;
-
+use REDCap;
 
 class PreceptorStudentReviews
 {

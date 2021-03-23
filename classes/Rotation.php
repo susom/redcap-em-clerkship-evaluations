@@ -3,7 +3,7 @@
 
 namespace Stanford\ClerkshipEvaluations;
 
-
+use REDCap;
 class Rotation
 {
     private $eventId;
