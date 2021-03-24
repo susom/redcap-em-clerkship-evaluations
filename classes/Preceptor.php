@@ -11,6 +11,8 @@ use REDCap;
  * @property int $eventId
  * @property array $record
  * @property array $rotations
+ * @property string $preRotationReview
+ * @property array $postRotationReviewInstruments
  */
 class Preceptor
 {
@@ -20,10 +22,16 @@ class Preceptor
 
     private $rotations;
 
-    public function __construct($eventId)
+    private $preRotationReview;
+
+    private $postRotationReviewInstruments;
+
+    public function __construct($eventId, $preRotationReview, $postRotationReviewInstruments)
     {
         try {
             $this->setEventId($eventId);
+            $this->setPreRotationReview($preRotationReview);
+            $this->setPostRotationReviewInstruments($postRotationReviewInstruments);
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
@@ -132,6 +140,90 @@ class Preceptor
             }
         }
         return false;
+    }
+
+    /**
+     * @param \Project $project
+     * @param array $review
+     */
+    public function isPreRotationReviewComplete($project, $review)
+    {
+        try {
+            $preRotationReviewInstrument = $this->getPreRotationReview();
+            $fields = array_keys($project->forms[$preRotationReviewInstrument]['fields']);
+            $completedField = end($fields);
+            if ($review[$completedField] == 2) {
+                return true;
+            }
+            return false;
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            die();
+        }
+    }
+
+    public function isPostRotationReviewComplete($project, $review, $specialty)
+    {
+        try {
+            $postRotationReviewInstrument = $this->findSpecialtyPostRotationReviewInstrument($project, $specialty);
+            $fields = array_keys($project->forms[$postRotationReviewInstrument]['fields']);
+            $completedField = end($fields);
+            if ($review[$completedField] == 2) {
+                return true;
+            }
+            return false;
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+            die();
+        }
+    }
+
+    /**
+     * @param \Project $project
+     * @param string $specialty
+     */
+    public function findSpecialtyPostRotationReviewInstrument($project, $specialty)
+    {
+        foreach ($this->getPostRotationReviewInstruments() as $instrument) {
+            // instrument is array not string
+            $value = array_pop($instrument);
+            if ($specialty == $project->forms[$value]['menu']) {
+                return $value;
+            }
+        }
+        throw new \Exception("could not find post rotation review instrument. please  check EM configuration");
+    }
+
+    /**
+     * @return string
+     */
+    public function getPreRotationReview(): string
+    {
+        return $this->preRotationReview;
+    }
+
+    /**
+     * @param string $preRotationReview
+     */
+    public function setPreRotationReview(string $preRotationReview): void
+    {
+        $this->preRotationReview = $preRotationReview;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPostRotationReviewInstruments(): array
+    {
+        return $this->postRotationReviewInstruments;
+    }
+
+    /**
+     * @param array $postRotationReviewInstruments
+     */
+    public function setPostRotationReviewInstruments(array $postRotationReviewInstruments): void
+    {
+        $this->postRotationReviewInstruments = $postRotationReviewInstruments;
     }
 
 

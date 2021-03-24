@@ -11,6 +11,7 @@ use REDCap;
  * @property int $recordId
  * @property array $record
  * @property array $rotations
+ * @property string $reviewInstrument
  */
 class Student
 {
@@ -24,10 +25,13 @@ class Student
 
     private $recordId;
 
-    public function __construct($eventId)
+    private $reviewInstrument;
+
+    public function __construct($eventId, $reviewInstrument)
     {
         try {
             $this->setEventId($eventId);
+            $this->setReviewInstrument($reviewInstrument);
         } catch (\LogicException $e) {
             echo $e->getMessage();
         }
@@ -171,5 +175,22 @@ class Student
     {
         $this->rotations = $rotations;
     }
+
+    /**
+     * @return string
+     */
+    public function getReviewInstrument(): string
+    {
+        return $this->reviewInstrument;
+    }
+
+    /**
+     * @param string $reviewInstrument
+     */
+    public function setReviewInstrument(string $reviewInstrument): void
+    {
+        $this->reviewInstrument = $reviewInstrument;
+    }
+
 
 }

@@ -60,8 +60,8 @@ use Stanford\ClerkshipEvaluations\Rotation;
                 $reviews = $module->getPreceptorStudentReview()->getRotationReviews($rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()]);
                 if ($reviews) {
                     foreach ($reviews as $review) {
-                        if (!$review[$module->getPreceptorStudentReview()->getEventId()]['student_evaluation_complete']) {
-                            $url = REDCap::getSurveyLink($review[$module->getPreceptorStudentReview()->getEventId()][REDCap::getRecordIdField()], 'student_evaluation', $module->getPreceptorStudentReview()->getEventId());
+                        if ($review[$module->getPreceptorStudentReview()->getEventId()]['student_evaluation_complete'] != 2) {
+                            $url = REDCap::getSurveyLink($review[$module->getPreceptorStudentReview()->getEventId()][REDCap::getRecordIdField()], $module->getStudent()->getReviewInstrument(), $module->getPreceptorStudentReview()->getEventId());
                         }
                         ?>
                         <tr>

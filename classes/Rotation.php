@@ -29,6 +29,12 @@ class Rotation
         return $months[$index];
     }
 
+    public static function getSpecialtyValue($list, $index)
+    {
+        $specialties = parseEnum($list);
+        return $specialties[$index];
+    }
+
     public static function getRotationsRecords($recordId, $eventId, $type)
     {
         if ($type == 'students') {

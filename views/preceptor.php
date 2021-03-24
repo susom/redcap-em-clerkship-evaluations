@@ -59,15 +59,35 @@ use Stanford\ClerkshipEvaluations\Student;
             $reviews = $module->getPreceptorStudentReview()->getPreceptorReviews($module->getPreceptor()->getRecord()[$module->getPreceptor()->getEventId()][REDCap::getRecordIdField()]);
             if ($reviews) {
                 foreach ($reviews as $id => $review) {
-                    $rotation = Rotation::getRotation($review[$module->getPreceptorStudentReview()->getEventId()]['rotation_id'], $module->getRotation()->getEventId())
+                    $rotation = Rotation::getRotation($review[$module->getPreceptorStudentReview()->getEventId()]['rotation_id'], $module->getRotation()->getEventId());
+
                     ?>
                     <tr>
                         <td><?php echo $rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()] ?></td>
                         <td><?php echo $rotation[$module->getRotation()->getEventId()]['location'] ?></td>
                         <td><?php echo Rotation::getMonthValue($months, $rotation[$module->getRotation()->getEventId()]['month']) ?></td>
                         <td><?php echo Student::getStudentName($module->getStudent()->getEventId(), $rotation[$module->getRotation()->getEventId()]['student_id']) ?></td>
-                        <td></td>
-                        <td></td>
+                        <td>
+                            <?php
+                            if (!$module->getPreceptor()->isPreRotationReviewComplete($module->getProject(), $review[$module->getPreceptorStudentReview()->getEventId()])) {
+                                $url = REDCap::getSurveyLink($review[$module->getPreceptorStudentReview()->getEventId()][REDCap::getRecordIdField()], $module->getPreceptor()->getPreRotationReview(), $module->getPreceptorStudentReview()->getEventId());
+                                echo "<a href='$url' target='_blank'>Pre Rotation Evaluation</a>";
+                            } else {
+                                echo "Evaluation Completed";
+                            }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            $specialty = Rotation::getSpecialtyValue($module->getProject()->metadata['specialty']["element_enum"], $rotation[$module->getRotation()->getEventId()]['specialty']);
+                            if (!$module->getPreceptor()->isPostRotationReviewComplete($module->getProject(), $review[$module->getPreceptorStudentReview()->getEventId()], $specialty)) {
+                                $postUrl = REDCap::getSurveyLink($review[$module->getPreceptorStudentReview()->getEventId()][REDCap::getRecordIdField()], $module->getPreceptor()->findSpecialtyPostRotationReviewInstrument($module->getProject(), $specialty), $module->getPreceptorStudentReview()->getEventId());
+                                echo "<a href='$postUrl' target='_blank'>Post Rotation Evaluation</a>";
+                            } else {
+                                echo "Evaluation Completed";
+                            }
+                            ?>
+                        </td>
                     </tr>
                     <?php
                 }

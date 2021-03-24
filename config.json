@@ -63,6 +63,33 @@
             "type": "event-list"
         },
         {
+            "key": "student-review",
+            "name": "Select Student Review instrument",
+            "required": true,
+            "type": "form-list"
+        },
+        {
+            "key": "pre-rotation-review",
+            "name": "Select Pre-Rotation Review instrument",
+            "required": true,
+            "type": "form-list"
+        },
+        {
+            "key": "post-rotation-instance",
+            "name": "<b>Define Post Rotation Speciality</b>",
+            "required": true,
+            "type": "sub_settings",
+            "repeatable": true,
+            "sub_settings": [
+                {
+                    "key": "post-rotation-review",
+                    "name": "<b>Define Post Rotation Speciality</b><br/>",
+                    "required": true,
+                    "type": "form-list"
+                }
+            ]
+        },
+        {
             "key": "enable-project-debug-logging",
             "name": "<b>Enable Debug Logging</b><br><i>(optional)</i> Requires installation and configuration of emLogger",
             "required": false,
