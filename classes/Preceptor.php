@@ -109,7 +109,7 @@ class Preceptor
 
         $i = 0;
         do {
-            $new_hash = generateRandomHash(8, false, true, false);
+            $new_hash = generateRandomHash(20, false, true, false);
 
             $q = $this->getStudentViaHash($new_hash);
             $i++;

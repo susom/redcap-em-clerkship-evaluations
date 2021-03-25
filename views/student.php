@@ -19,6 +19,7 @@ use Stanford\ClerkshipEvaluations\Rotation;
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="<?php echo $module->getUrl('assets/css/main.css') ?>">
     <link rel="stylesheet" type="text/css"
           href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css"></link>
 
@@ -44,7 +45,7 @@ use Stanford\ClerkshipEvaluations\Rotation;
         <h3><?php echo $module->getProjectSetting("header_text") ?></h3>
     </div>
     <div class="row p-1">
-        <table id="student-table" class="display table table-striped table-bordered">
+        <table id="review-table" class="display table table-striped table-bordered">
             <thead>
             <th>ID</th>
             <th>Location</th>
@@ -69,7 +70,7 @@ use Stanford\ClerkshipEvaluations\Rotation;
                             <td><?php echo $rotation[$module->getRotation()->getEventId()]['location'] ?></td>
                             <td><?php echo Rotation::getMonthValue($months, $rotation[$module->getRotation()->getEventId()]['month']) ?></td>
                             <td><?php echo Preceptor::getPreceptorName($module->getPreceptor()->getEventId(), $review[$module->getPreceptorStudentReview()->getEventId()]['preceptor_id']) ?></td>
-                            <td><?php echo !$review[$module->getPreceptorStudentReview()->getEventId()]['student_evaluation_complete'] ? '<a href="' . $url . '" target="_blank">Evaluate</a>' : 'Evaluation Completed' ?></td>
+                            <td><?php echo !$review[$module->getPreceptorStudentReview()->getEventId()]['student_evaluation_complete'] ? '<a href="' . $url . '" target="_blank">Evaluate</a>' : 'Review Completed' ?></td>
                         </tr>
                         <?php
                     }
@@ -82,6 +83,6 @@ use Stanford\ClerkshipEvaluations\Rotation;
     <div class="row p-1">
     </div>
 </div>
-<script src="<?php echo $module->getUrl('asset/js/student.js') ?>"></script>
+<script src="<?php echo $module->getUrl('assets/js/main.js') ?>"></script>
 </body>
 </html>

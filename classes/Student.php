@@ -52,9 +52,6 @@ class Student
     {
         $this->record = $this->getStudentViaHash($identifier, $field,
             array());
-
-        $temp = array_pop($this->record);
-        $this->setRecordId($temp[$this->getEventId()][REDCap::getRecordIdField()]);
     }
 
     public static function getStudentName($eventId, $studentId)
@@ -116,7 +113,7 @@ class Student
 
         $i = 0;
         do {
-            $new_hash = generateRandomHash(8, false, true, false);
+            $new_hash = generateRandomHash(20, false, true, false);
 
             $q = $this->getStudentViaHash($new_hash);
             $i++;
@@ -163,7 +160,8 @@ class Student
         if ($this->rotations) {
             return $this->rotations;
         } else {
-            $this->setRotations(Rotation::getRotationsRecords($this->getRecord()[$this->getEventId()][\REDCap::getRecordIdField()], $rotationsEventId, 'student'));
+            $record = end($this->getRecord());
+            $this->setRotations(Rotation::getRotationsRecords($record[$this->getEventId()][\REDCap::getRecordIdField()], $rotationsEventId, 'students'));
         }
         return $this->rotations;
     }

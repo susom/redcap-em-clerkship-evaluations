@@ -1,0 +1,3 @@
+.complete-filter:before {
+    content: 'Hide Completed Reviews:';
+}
