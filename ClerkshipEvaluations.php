@@ -38,7 +38,7 @@ class ClerkshipEvaluations extends \ExternalModules\AbstractExternalModule
 
         try {
 
-            if (isset($_GET['pid'])) {
+            if (isset($_GET['pid']) && $this->getProjectSetting("students") && $this->getProjectSetting("preceptors")) {
                 global $Proj;
                 $this->setProject($Proj);
 
