@@ -56,11 +56,11 @@ use Stanford\ClerkshipEvaluations\Student;
         <table id="review-table" class="display table table-striped table-bordered">
             <thead>
             <th>ID</th>
-            <th>Location</th>
-            <th>Month</th>
+            <th>Site</th>
+            <th>Clerkship Period</th>
             <th>Student</th>
             <th>Specialty</th>
-            <th>Pre-Rotation Review</th>
+            <th>SIPS Clinical Readiness Evaluation</th>
             <th>Post-Rotation Review</th>
             </thead>
             <tbody>

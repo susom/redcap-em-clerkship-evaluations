@@ -48,8 +48,8 @@ use Stanford\ClerkshipEvaluations\Rotation;
         <table id="review-table" class="display table table-striped table-bordered">
             <thead>
             <th>ID</th>
-            <th>Location</th>
-            <th>Month</th>
+            <th>Site</th>
+            <th>Clerkship Period</th>
             <th>Preceptor</th>
             <th>Evaluate</th>
             </thead>
