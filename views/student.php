@@ -61,7 +61,7 @@ use Stanford\ClerkshipEvaluations\Rotation;
                 $reviews = $module->getPreceptorStudentReview()->getRotationReviews($rotation[$module->getRotation()->getEventId()][REDCap::getRecordIdField()]);
                 if ($reviews) {
                     foreach ($reviews as $review) {
-                        if ($review[$module->getPreceptorStudentReview()->getEventId()]['student_evaluation_complete'] != 2) {
+                        if ($review[$module->getPreceptorStudentReview()->getEventId()][$module->getStudent()->getReviewInstrumentCompleteField()] != 2) {
                             $url = REDCap::getSurveyLink($review[$module->getPreceptorStudentReview()->getEventId()][REDCap::getRecordIdField()], $module->getStudent()->getReviewInstrument(), $module->getPreceptorStudentReview()->getEventId());
                         }
                         ?>
@@ -70,7 +70,7 @@ use Stanford\ClerkshipEvaluations\Rotation;
                             <td><?php echo $rotation[$module->getRotation()->getEventId()]['location'] ?></td>
                             <td><?php echo Rotation::getMonthValue($months, $rotation[$module->getRotation()->getEventId()]['month']) ?></td>
                             <td><?php echo Preceptor::getPreceptorName($module->getPreceptor()->getEventId(), $review[$module->getPreceptorStudentReview()->getEventId()]['preceptor_id']) ?></td>
-                            <td><?php echo !$review[$module->getPreceptorStudentReview()->getEventId()]['student_evaluation_complete'] ? '<a href="' . $url . '" target="_blank">Evaluate</a>' : 'Review Completed' ?></td>
+                            <td><?php echo !$review[$module->getPreceptorStudentReview()->getEventId()][$module->getStudent()->getReviewInstrumentCompleteField()] ? '<a href="' . $url . '" target="_blank">Evaluate</a>' : 'Review Completed' ?></td>
                         </tr>
                         <?php
                     }

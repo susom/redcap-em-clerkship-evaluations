@@ -41,8 +41,7 @@ class ClerkshipEvaluations extends \ExternalModules\AbstractExternalModule
             if (isset($_GET['pid']) && $this->getProjectSetting("students") && $this->getProjectSetting("preceptors")) {
                 global $Proj;
                 $this->setProject($Proj);
-
-                $this->setStudent(new Student($this->getProjectSetting("students"), $this->getProjectSetting("student-review")));
+                $this->setStudent(new Student($this->getProjectSetting("students"), $this->getProjectSetting("student-review"), end(array_keys($this->getProject()->forms[$this->getProjectSetting("student-review")]['fields']))));
                 $this->setPreceptor(new Preceptor($this->getProjectSetting("preceptors"), $this->getProjectSetting("pre-rotation-review"), $this->getSubSettings('post-rotation-instance', $this->getProjectId())));
                 $this->setRotation(new Rotation($this->getProjectSetting("rotations")));
                 $this->setPreceptorStudentReview(new PreceptorStudentReviews($this->getProjectSetting("preceptor-student-reviews")));
