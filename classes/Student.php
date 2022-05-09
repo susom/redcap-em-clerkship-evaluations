@@ -96,8 +96,10 @@ class Student
     /**
      * @param int $recordId
      */
-    public function setRecordId(int $recordId): void
+    public function setRecordId()
     {
+        $temp = func_get_args();
+        $recordId = $temp[0];
         $this->recordId = $recordId;
     }
 
