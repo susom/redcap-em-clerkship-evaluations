@@ -113,7 +113,7 @@ class Preceptor
 
             $q = $this->getStudentViaHash($new_hash);
             $i++;
-        } while (count($q) > 0 and $i < 10); //keep generating until nothing returns from get
+        } while (count(is_array($q)?$q:[]) > 0 and $i < 10); //keep generating until nothing returns from get
 
         return $new_hash;
     }
