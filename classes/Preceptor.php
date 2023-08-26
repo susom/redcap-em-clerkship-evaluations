@@ -139,7 +139,7 @@ class Preceptor
                 return array($key => $records[$key]);
             }
         }
-        return false;
+        return [];
     }
 
     /**
